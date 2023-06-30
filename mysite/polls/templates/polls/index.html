@@ -8,60 +8,32 @@
     <p>No polls are available.</p>
 {% endif %} -->
 
+ 
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border:2px solid #dddddd;
-  text-align: center;
-  padding: 15px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
 </head>
 <body>
-
-<h2>Questions</h2>
-
-<table>
-    <div class="col-xs-6">
-        <a href="#addQuestionModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Question</span></a>
-    </div>
-  <tr>
-    <th>ID</th>
-    <th>Question</th>
-    <th>View detail</th>
-    <th>Actions</th>
-  </tr>
-</td>
-<td>1</td>
-<td>What's up?</td>
-<td>{% if latest_question_list %}
+    
+    <h2>Question:</h2>
     <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}</td>
-<td>
-    <a href="#editQuestionModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-    <a href="#deleteQuestionModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-</td>
-</table>
+      <!-- {% for question in qs %}
+        <li>{{ question.question_text }}</li>
+        
+      {% endfor %}  -->
 
+      {% for question in qs %}
+        <li>{{ question.question_text }}</li>
+        <!-- <li>{{ question.question_related.all }}</li> -->
+        {% for x in question.question_related.all %}
+        <p>{{ x.choice_text }}</p>
+        {% endfor %}
+      {% endfor %}
+    </ul>
 </body>
 </html>
-
