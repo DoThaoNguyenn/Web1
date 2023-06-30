@@ -6,15 +6,29 @@ from django.urls import reverse
 from .models import Choice, Question
 
 
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
+# def index(request):
+#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
+#     context = {'latest_question_list': latest_question_list}
+#     return render(request, 'polls/index.html', context)
 
+def index(request):
+    list_question = Question.objects.all()
+    # list_choice = Choice.objects.all()
+
+    for question in list_question:
+        print(question)
+        Choice.objects.filter(question=question.id)
+
+    context = {'qs': list_question}
+    # context = {'ch': list_choice}
+    return render(request,"polls/index.html",context )
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+    choices = Choice.objects.filter(question=question_id)
+    print(choices.values())
+
+    return render(request, 'polls/detail.html', {'question': question, 'choices': choices})
 
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -38,3 +52,9 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
+
+# def index(request):
+#     myname='abc'
+#     thongtin=['sdt','cccd','dchi']
+#     context={"name":myname, "tt": thongtin}
+#     return render(request,'polls/index.html',context)
