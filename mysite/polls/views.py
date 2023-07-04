@@ -20,13 +20,13 @@ def index(request):
         Choice.objects.filter(question=question.id)
 
     context = {'qs': list_question}
-    # context = {'ch': list_choice}
+    # context = {'ch': list_choice}  
     return render(request,"polls/index.html",context )
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     choices = Choice.objects.filter(question=question_id)
-    print(choices.values())
+    
 
     return render(request, 'polls/detail.html', {'question': question, 'choices': choices})
 
@@ -36,8 +36,10 @@ def results(request, question_id):
     
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
+    
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question.Choices.get(pk=request.POST['choice'])
+
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
@@ -52,9 +54,3 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
-
-# def index(request):
-#     myname='abc'
-#     thongtin=['sdt','cccd','dchi']
-#     context={"name":myname, "tt": thongtin}
-#     return render(request,'polls/index.html',context)

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail</title>
+</head>
+<body>
+    <h2>product detail</h2>
+    <ul>
+        {% for x in product %}
+            <li>{{ x.catogory }}</li>
+            <li>{{ x.product_name }}</li>
+            <li>{{ x.product_cost }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
